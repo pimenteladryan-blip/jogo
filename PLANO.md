@@ -430,7 +430,6 @@ Hollow Knight, Ori and the Blind Forest, Ender Lilies, Celeste, Hyper Light Drif
 | Versão | Data | Mudança |
 |---|---|---|
 | 1 | 23/10/2026 | Planejamento inicial |
-| 2 | 23/10/2026 | Planejamento completo: arquitetura, arte/áudio, riscos, ambiente, publicação e apresentação |
 
 ---
 
