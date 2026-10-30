@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(14, 24)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -7.0
+offset_top = -24.0
+offset_right = 7.0
+mouse_filter = 2
+color = Color(0.615686, 0.705882, 0.752941, 1)
+
+[node name="Eye" type="ColorRect" parent="Visual"]
+offset_left = 1.0
+offset_top = -18.0
+offset_right = 5.0
+offset_bottom = -14.0
+mouse_filter = 2
+color = Color(0.0509804, 0.105882, 0.164706, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -40)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

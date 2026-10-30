@@ -8,7 +8,7 @@ Para avançar, ele recupera habilidades antigas e enfrenta o **Guardião** que s
 
 ## Status
 
-Em desenvolvimento — **Etapa 0 (projeto base)** concluída.
+Em desenvolvimento — **Etapa 1 (movimento do jogador)** concluída.
 
 O planejamento completo está em [`PLANO.md`](PLANO.md).
 
