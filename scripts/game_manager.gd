@@ -5,6 +5,7 @@ signal health_changed(current: int, maximum: int)
 signal player_died
 signal ability_unlocked(ability: String)
 signal room_changed(room_id: int, room_name: String)
+signal victory
 
 const MAX_HEALTH := 5
 

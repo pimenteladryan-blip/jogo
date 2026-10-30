@@ -7,6 +7,7 @@ signal door_entered(target_room: int, spawn: Vector2)
 
 const CHASER_SCENE := preload("res://scenes/enemies/chaser.tscn")
 const SHOOTER_SCENE := preload("res://scenes/enemies/shooter.tscn")
+const BOSS_SCENE := preload("res://scenes/enemies/boss.tscn")
 const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const PICKUP_SCENE := preload("res://scenes/pickup.tscn")
 
@@ -130,6 +131,8 @@ func _build_enemies() -> void:
 		var scene: PackedScene = CHASER_SCENE
 		if enemy_data.type == "shooter":
 			scene = SHOOTER_SCENE
+		elif enemy_data.type == "boss":
+			scene = BOSS_SCENE
 		var enemy: Node2D = scene.instantiate()
 		enemy.position = enemy_data.pos
 		add_child(enemy)

@@ -177,10 +177,32 @@ const ROOMS := {
 		"doors": [
 			{"rect": Rect2(0, 260, 20, 60), "to": 7, "spawn": Vector2(1200, 320)},
 			{"rect": Rect2(900, 130, 60, 70), "to": 5, "spawn": Vector2(60, 420)},
+			{"rect": Rect2(936, 260, 24, 60), "to": 9, "spawn": Vector2(80, 320)},
 		],
 		"checkpoint": {"pos": Vector2(480, 320)},
 		"pickup": {"ability": "double_jump", "pos": Vector2(360, 210)},
 		"memory": "Ele contou os dias até perder a conta.",
+	},
+	9: {
+		"name": "Santuário do Guardião",
+		"size": Vector2(800, 360),
+		"spawn": Vector2(80, 320),
+		"platforms": [
+			Rect2(0, 320, 800, 40),
+			Rect2(-40, 0, 40, 360),
+			Rect2(800, 0, 40, 360),
+			Rect2(120, 240, 100, 16),
+			Rect2(580, 240, 100, 16),
+		],
+		"enemies": [
+			{"type": "boss", "pos": Vector2(620, 320)},
+		],
+		"doors": [
+			{"rect": Rect2(0, 260, 20, 60), "to": 8, "spawn": Vector2(900, 320)},
+		],
+		"checkpoint": null,
+		"pickup": null,
+		"memory": "No fim, lembrar é uma forma de ficar.",
 	},
 }
 

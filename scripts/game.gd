@@ -10,6 +10,7 @@ const MENU_SCENE := "res://scenes/ui/menu.tscn"
 @onready var intro: Control = $UI/Intro
 @onready var pause_menu: Control = $UI/Pause
 @onready var game_over: Control = $UI/GameOver
+@onready var victory: Control = $UI/Victory
 
 var _transitioning := false
 var _paused := false
@@ -28,14 +29,17 @@ func _ready() -> void:
 		GameManager.set_checkpoint(1, RoomsData.get_room(1).spawn)
 
 	GameManager.player_died.connect(_on_player_died)
+	GameManager.victory.connect(_on_victory)
 	$UI/Pause/Resume.pressed.connect(_on_resume_pressed)
 	$UI/Pause/Restart.pressed.connect(_on_restart_pressed)
 	$UI/Pause/ToMenu.pressed.connect(_go_to_menu)
 	$UI/GameOver/Retry.pressed.connect(_on_retry_pressed)
 	$UI/GameOver/ToMenu.pressed.connect(_go_to_menu)
+	$UI/Victory/ToMenu.pressed.connect(_go_to_menu)
 
 	pause_menu.hide()
 	game_over.hide()
+	victory.hide()
 	fade.color = Color(0.0, 0.0, 0.0, 0.0)
 
 	_load_room(1, RoomsData.get_room(1).spawn)
@@ -145,6 +149,12 @@ func _on_retry_pressed() -> void:
 	GameManager.heal_full()
 	player.revive()
 	_load_room(GameManager.checkpoint_room, GameManager.checkpoint_position)
+
+
+func _on_victory() -> void:
+	await get_tree().create_timer(1.6).timeout
+	victory.show()
+	get_tree().paused = true
 
 
 func _on_resume_pressed() -> void:

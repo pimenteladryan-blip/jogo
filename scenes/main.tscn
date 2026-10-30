@@ -178,3 +178,49 @@ offset_bottom = 254.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 11
 text = "MENU"
+
+[node name="Victory" type="Control" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UI/Victory"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.105882, 0.164706, 0.94)
+
+[node name="Title" type="Label" parent="UI/Victory"]
+offset_top = 70.0
+offset_right = 640.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.878431, 0.643137, 0.345098, 1)
+theme_override_font_sizes/font_size = 20
+text = "O TEMPLO LEMBRA"
+horizontal_alignment = 1
+
+[node name="Text" type="Label" parent="UI/Victory"]
+offset_left = 120.0
+offset_top = 126.0
+offset_right = 520.0
+offset_bottom = 210.0
+theme_override_colors/font_color = Color(0.615686, 0.705882, 0.752941, 1)
+theme_override_font_sizes/font_size = 11
+text = "Você devolveu ao templo as memórias que ele guardava.\nO Guardião descansa, e o sino volta a soar.\n\nO que fica é o que escolhemos lembrar."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ToMenu" type="Button" parent="UI/Victory"]
+offset_left = 220.0
+offset_top = 238.0
+offset_right = 420.0
+offset_bottom = 268.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 11
+text = "VOLTAR AO MENU"
