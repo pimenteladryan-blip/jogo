@@ -48,11 +48,7 @@ func _ready() -> void:
 	_attack_area.body_entered.connect(_on_attack_body_entered)
 	_attack_shape.disabled = true
 	_slash.visible = false
-	_camera.limit_left = int(camera_bounds.position.x)
-	_camera.limit_top = int(camera_bounds.position.y)
-	_camera.limit_right = int(camera_bounds.end.x)
-	_camera.limit_bottom = int(camera_bounds.end.y)
-	_camera.reset_smoothing()
+	set_camera_bounds(camera_bounds)
 
 
 func _physics_process(delta: float) -> void:
@@ -159,6 +155,25 @@ func _die() -> void:
 
 func is_dead() -> bool:
 	return _dead
+
+
+func set_camera_bounds(bounds: Rect2) -> void:
+	camera_bounds = bounds
+	_camera.limit_left = int(bounds.position.x)
+	_camera.limit_top = int(bounds.position.y)
+	_camera.limit_right = int(bounds.end.x)
+	_camera.limit_bottom = int(bounds.end.y)
+	_camera.reset_smoothing()
+
+
+func revive() -> void:
+	_dead = false
+	_visual.visible = true
+	_visual.modulate = Color.WHITE
+	_invincibility_timer = 0.0
+	velocity = Vector2.ZERO
+	$CollisionShape2D.set_deferred("disabled", false)
+	set_physics_process(true)
 
 
 func _update_visual() -> void:
