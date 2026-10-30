@@ -81,8 +81,7 @@ func _show_controls() -> void:
 		+ "Dash             Shift  ou  K\n"
 		+ "Interagir      E  ou  Enter\n"
 		+ "Pausar         Esc  ou  P\n"
-		+ "Mapa             M\n"
-		+ "Reiniciar      R"
+		+ "Reiniciar      R  (volta ao sino)"
 	)
 	info_panel.show()
 

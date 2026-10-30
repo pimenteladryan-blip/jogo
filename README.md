@@ -1,5 +1,7 @@
 # Templo de Memórias
 
+**▶ Jogar no navegador:** https://pimenteladryan-blip.github.io/jogo/
+
 Mini-metroidvania 2D de ação-plataforma sobre memórias perdidas, feito em **Godot 4** (GDScript)
 para projeto escolar.
 
@@ -43,6 +45,7 @@ As imagens foram geradas pelo próprio jogo em `1280×720` com o renderizador Co
 | Dash | `Shift` ou `K` |
 | Interagir (intro) | `E` ou `Enter` |
 | Pausar | `Esc` ou `P` |
+| Reiniciar no sino | `R` |
 
 ## Como rodar
 

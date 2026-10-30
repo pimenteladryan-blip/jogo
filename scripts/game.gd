@@ -61,6 +61,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not _dead and not _transitioning:
 		_toggle_pause()
 		get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("restart") and not _dead and not _transitioning and not _paused:
+		_on_restart_pressed()
+		get_viewport().set_input_as_handled()
 
 
 func _open_intro() -> void:

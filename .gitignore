@@ -7,17 +7,10 @@ export/
 build/
 *.translation
 
-# Exported web build (generated, not versioned)
-docs/index.html
-docs/index.js
-docs/index.wasm
-docs/index.pck
-docs/index.png
-docs/index.icon.png
-docs/*.audio.worklet.js
-docs/*.audio.position.worklet.js
-
 # OS / editor
 .DS_Store
 Thumbs.db
 *.tmp
+
+# Godot import metadata for README images
+docs/renders/*.import

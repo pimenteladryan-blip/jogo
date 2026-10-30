@@ -198,7 +198,7 @@ const ROOMS := {
 			{"type": "boss", "pos": Vector2(620, 320)},
 		],
 		"doors": [
-			{"rect": Rect2(0, 260, 20, 60), "to": 8, "spawn": Vector2(900, 320)},
+			{"rect": Rect2(0, 260, 20, 60), "to": 8, "spawn": Vector2(900, 320), "locked_until_boss": true},
 		],
 		"checkpoint": null,
 		"pickup": null,

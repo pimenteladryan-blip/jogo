@@ -112,6 +112,30 @@ func _build_doors() -> void:
 		var target_room: int = door_data.to
 		var spawn: Vector2 = door_data.spawn
 
+		# Porta lacrada durante a luta do Guardião: aparece como parede de pedra.
+		if door_data.get("locked_until_boss", false):
+			var seal := StaticBody2D.new()
+			seal.position = rect.get_center()
+			var seal_shape := CollisionShape2D.new()
+			var seal_rect := RectangleShape2D.new()
+			seal_rect.size = rect.size
+			seal_shape.shape = seal_rect
+			seal.add_child(seal_shape)
+			var seal_fill := ColorRect.new()
+			seal_fill.color = COLOR_PLATFORM
+			seal_fill.size = rect.size
+			seal_fill.position = -rect.size * 0.5
+			seal_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			seal.add_child(seal_fill)
+			var seal_edge := ColorRect.new()
+			seal_edge.color = COLOR_PLATFORM_EDGE
+			seal_edge.size = Vector2(2.0, rect.size.y)
+			seal_edge.position = Vector2(rect.size.x * 0.5 - 2.0, -rect.size.y * 0.5)
+			seal_edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			seal.add_child(seal_edge)
+			add_child(seal)
+			continue
+
 		var door := Area2D.new()
 		door.position = rect.get_center()
 		door.collision_layer = 0
