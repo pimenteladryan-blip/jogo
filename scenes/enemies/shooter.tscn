@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemy_shooter.gd" id="1_shooter"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(16, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
+size = Vector2(22, 26)
+
+[node name="Shooter" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_shooter")
+max_health = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -8.0
+offset_top = -22.0
+offset_right = 8.0
+mouse_filter = 2
+color = Color(0.254902, 0.352941, 0.466667, 1)
+
+[node name="Eye" type="ColorRect" parent="Visual"]
+offset_left = 1.0
+offset_top = -18.0
+offset_right = 5.0
+offset_bottom = -14.0
+mouse_filter = 2
+color = Color(0.878431, 0.643137, 0.345098, 1)
+
+[node name="Charge" type="ColorRect" parent="Visual"]
+visible = false
+offset_left = 10.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = -6.0
+mouse_filter = 2
+color = Color(0.878431, 0.643137, 0.345098, 1)
+
+[node name="TouchDamage" type="Area2D" parent="."]
+position = Vector2(0, -11)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchDamage"]
+shape = SubResource("RectangleShape2D_touch")
