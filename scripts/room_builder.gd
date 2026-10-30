@@ -125,11 +125,27 @@ func _build_doors() -> void:
 		door.add_child(shape)
 
 		var marker := ColorRect.new()
-		marker.color = COLOR_DOOR
+		marker.color = Color(COLOR_DOOR.r, COLOR_DOOR.g, COLOR_DOOR.b, 0.08)
 		marker.size = rect.size
 		marker.position = -rect.size * 0.5
 		marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		door.add_child(marker)
+
+		var bar_color := Color(COLOR_DOOR.r, COLOR_DOOR.g, COLOR_DOOR.b, 0.55)
+		for x in [-rect.size.x * 0.5, rect.size.x * 0.5 - 2.0]:
+			var bar := ColorRect.new()
+			bar.color = bar_color
+			bar.size = Vector2(2.0, rect.size.y)
+			bar.position = Vector2(x, -rect.size.y * 0.5)
+			bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			door.add_child(bar)
+
+		var lintel := ColorRect.new()
+		lintel.color = bar_color
+		lintel.size = Vector2(rect.size.x, 2.0)
+		lintel.position = Vector2(-rect.size.x * 0.5, -rect.size.y * 0.5)
+		lintel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		door.add_child(lintel)
 
 		door.body_entered.connect(
 			func(body: Node2D) -> void:
