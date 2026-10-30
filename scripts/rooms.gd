@@ -161,6 +161,27 @@ const ROOMS := {
 		"pickup": null,
 		"memory": "",
 	},
+	8: {
+		"name": "Antessala do Guardião",
+		"size": Vector2(960, 360),
+		"spawn": Vector2(60, 320),
+		"platforms": [
+			Rect2(0, 320, 960, 40),
+			Rect2(-40, 0, 40, 360),
+			Rect2(960, 0, 40, 360),
+			Rect2(300, 240, 120, 16),
+			Rect2(600, 240, 120, 16),
+			Rect2(800, 180, 120, 16),
+		],
+		"enemies": [],
+		"doors": [
+			{"rect": Rect2(0, 260, 20, 60), "to": 7, "spawn": Vector2(1200, 320)},
+			{"rect": Rect2(900, 130, 60, 70), "to": 5, "spawn": Vector2(60, 420)},
+		],
+		"checkpoint": {"pos": Vector2(480, 320)},
+		"pickup": {"ability": "double_jump", "pos": Vector2(360, 210)},
+		"memory": "Ele contou os dias até perder a conta.",
+	},
 }
 
 

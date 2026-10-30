@@ -35,6 +35,7 @@ signal died
 
 var _coyote_timer := 0.0
 var _jump_buffer_timer := 0.0
+var _jumps_used := 0
 var _attack_cooldown_timer := 0.0
 var _attack_active_timer := 0.0
 var _invincibility_timer := 0.0
@@ -115,16 +116,24 @@ func _handle_horizontal(delta: float) -> void:
 
 
 func _handle_jump(delta: float) -> void:
+	if is_on_floor():
+		_jumps_used = 0
 	_coyote_timer = coyote_time if is_on_floor() else maxf(_coyote_timer - delta, 0.0)
 	_jump_buffer_timer = maxf(_jump_buffer_timer - delta, 0.0)
 
 	if Input.is_action_just_pressed("jump"):
 		_jump_buffer_timer = jump_buffer_time
 
-	if _jump_buffer_timer > 0.0 and _coyote_timer > 0.0:
+	var double_jump_ready := GameManager.has_ability("double_jump") and _jumps_used == 1
+	var can_jump := _coyote_timer > 0.0 or double_jump_ready
+
+	if _jump_buffer_timer > 0.0 and can_jump:
 		velocity.y = jump_velocity
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
+		if double_jump_ready and not is_on_floor():
+			Fx.light_burst(get_parent(), global_position + Vector2(0, 4), Color(0.615686, 0.941176, 1.0), 8)
+		_jumps_used += 1
 
 	# Pulo variável: soltar a tecla cedo encurta o salto.
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
