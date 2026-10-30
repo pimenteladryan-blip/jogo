@@ -25,6 +25,11 @@ signal died
 @export var invincibility_time := 1.0
 @export var knockback_force := 180.0
 
+@export_group("Habilidades")
+@export var dash_speed := 520.0
+@export var dash_duration := 0.16
+@export var dash_cooldown := 0.45
+
 @export_group("Câmera")
 @export var camera_bounds := Rect2(0, 0, 640, 360)
 
@@ -33,6 +38,11 @@ var _jump_buffer_timer := 0.0
 var _attack_cooldown_timer := 0.0
 var _attack_active_timer := 0.0
 var _invincibility_timer := 0.0
+var _dash_cooldown_timer := 0.0
+var _dash_timer := 0.0
+var _ghost_timer := 0.0
+var _dash_direction := 1.0
+var _is_dashing := false
 var _facing := 1
 var _dead := false
 
@@ -56,9 +66,15 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_tick_timers(delta)
-	_apply_gravity(delta)
-	_handle_horizontal(delta)
-	_handle_jump(delta)
+
+	if _is_dashing:
+		_continue_dash(delta)
+	else:
+		_apply_gravity(delta)
+		_handle_horizontal(delta)
+		_handle_jump(delta)
+		_try_start_dash()
+
 	_handle_attack()
 	move_and_slide()
 	_update_visual()
@@ -67,12 +83,19 @@ func _physics_process(delta: float) -> void:
 func _tick_timers(delta: float) -> void:
 	_attack_cooldown_timer = maxf(_attack_cooldown_timer - delta, 0.0)
 	_invincibility_timer = maxf(_invincibility_timer - delta, 0.0)
+	_dash_cooldown_timer = maxf(_dash_cooldown_timer - delta, 0.0)
 
 	if _attack_active_timer > 0.0:
 		_attack_active_timer = maxf(_attack_active_timer - delta, 0.0)
 		if _attack_active_timer <= 0.0:
 			_attack_shape.disabled = true
 			_slash.visible = false
+
+	if _is_dashing:
+		_ghost_timer -= delta
+		if _ghost_timer <= 0.0:
+			_ghost_timer = 0.045
+			_spawn_dash_ghost()
 
 
 func _apply_gravity(delta: float) -> void:
@@ -106,6 +129,43 @@ func _handle_jump(delta: float) -> void:
 	# Pulo variável: soltar a tecla cedo encurta o salto.
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y *= 0.5
+
+
+func _try_start_dash() -> void:
+	if not Input.is_action_just_pressed("dash"):
+		return
+	if not GameManager.has_ability("dash") or _dash_cooldown_timer > 0.0:
+		return
+
+	_is_dashing = true
+	_dash_timer = dash_duration
+	_dash_cooldown_timer = dash_cooldown + dash_duration
+	_dash_direction = signf(velocity.x) if absf(velocity.x) > 10.0 else float(_facing)
+	_facing = 1 if _dash_direction > 0.0 else -1
+	velocity = Vector2(_dash_direction * dash_speed, velocity.y)
+	_ghost_timer = 0.0
+	_spawn_dash_ghost()
+	Fx.light_burst(get_parent(), global_position + Vector2(0, -12), Color(0.615686, 0.941176, 1.0), 8)
+
+
+func _continue_dash(delta: float) -> void:
+	_dash_timer -= delta
+	velocity.x = _dash_direction * dash_speed
+	if _dash_timer <= 0.0:
+		_is_dashing = false
+		velocity.x = _dash_direction * move_speed
+
+
+func _spawn_dash_ghost() -> void:
+	var ghost := ColorRect.new()
+	ghost.color = Color(0.615686, 0.941176, 1.0, 0.35)
+	ghost.size = Vector2(14, 24)
+	ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	get_parent().add_child(ghost)
+	ghost.global_position = global_position + Vector2(-7, -24)
+	var tween := ghost.create_tween()
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.22)
+	tween.tween_callback(ghost.queue_free)
 
 
 func _handle_attack() -> void:

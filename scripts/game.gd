@@ -15,6 +15,8 @@ var _transitioning := false
 var _paused := false
 var _intro_open := false
 var _dead := false
+var _room_size := Vector2(640, 360)
+var _room_spawn := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -88,10 +90,25 @@ func _load_room(room_id: int, spawn: Vector2) -> void:
 	player.global_position = spawn
 	player.set_camera_bounds(Rect2(Vector2.ZERO, data.size))
 	GameManager.set_room(room_id, data.name)
+	_room_size = data.size
+	_room_spawn = spawn
 
 	var memory: String = data.get("memory", "")
 	if memory != "":
 		hud.show_memory(memory)
+
+
+func _physics_process(_delta: float) -> void:
+	if _dead or _transitioning or _intro_open:
+		return
+	if player.global_position.y > _room_size.y + 120.0:
+		_respawn_from_pit()
+
+
+func _respawn_from_pit() -> void:
+	player.take_damage(1, player.global_position.x + 10.0)
+	player.global_position = _room_spawn
+	player.velocity = Vector2.ZERO
 
 
 func _on_door_entered(target_room: int, spawn: Vector2) -> void:
