@@ -27,6 +27,7 @@ func setup(id: int, room_data: Dictionary) -> void:
 
 func _ready() -> void:
 	_build_background()
+	_build_decor()
 	_build_platforms()
 	_build_doors()
 	_build_checkpoint()
@@ -42,6 +43,39 @@ func _build_background() -> void:
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	background.z_index = -100
 	add_child(background)
+
+
+func _build_decor() -> void:
+	var size: Vector2 = data.size
+	var rng := RandomNumberGenerator.new()
+	rng.seed = room_id * 7919
+	for i in 14:
+		var mote := ColorRect.new()
+		mote.color = Color(0.615686, 0.705882, 0.752941, rng.randf_range(0.12, 0.35))
+		var side := 1.0 if i % 3 != 0 else 2.0
+		mote.size = Vector2(side, side)
+		mote.position = Vector2(rng.randf() * size.x, rng.randf() * size.y * 0.85)
+		mote.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		mote.z_index = -90
+		add_child(mote)
+
+	var columns := int(size.x / 220.0) + 1
+	for i in columns:
+		var column := ColorRect.new()
+		column.color = Color(0.105882, 0.14902, 0.231373, 1.0)
+		column.size = Vector2(26.0, size.y)
+		column.position = Vector2(i * 220.0 + 60.0, 0.0)
+		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		column.z_index = -90
+		add_child(column)
+
+		var cap := ColorRect.new()
+		cap.color = Color(0.254902, 0.352941, 0.466667, 0.55)
+		cap.size = Vector2(34.0, 4.0)
+		cap.position = Vector2(i * 220.0 + 56.0, size.y - 44.0)
+		cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cap.z_index = -89
+		add_child(cap)
 
 
 func _build_platforms() -> void:

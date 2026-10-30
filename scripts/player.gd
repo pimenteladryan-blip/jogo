@@ -133,6 +133,7 @@ func _handle_jump(delta: float) -> void:
 		_coyote_timer = 0.0
 		if double_jump_ready and not is_on_floor():
 			Fx.light_burst(get_parent(), global_position + Vector2(0, 4), Color(0.615686, 0.941176, 1.0), 8)
+		AudioManager.play("double_jump" if double_jump_ready else "jump")
 		_jumps_used += 1
 
 	# Pulo variável: soltar a tecla cedo encurta o salto.
@@ -154,6 +155,7 @@ func _try_start_dash() -> void:
 	velocity = Vector2(_dash_direction * dash_speed, velocity.y)
 	_ghost_timer = 0.0
 	_spawn_dash_ghost()
+	AudioManager.play("dash")
 	Fx.light_burst(get_parent(), global_position + Vector2(0, -12), Color(0.615686, 0.941176, 1.0), 8)
 
 
@@ -185,6 +187,7 @@ func _handle_attack() -> void:
 
 	_attack_cooldown_timer = attack_cooldown
 	_attack_active_timer = attack_active_time
+	AudioManager.play("attack")
 	_attack_area.position.x = 18.0 * _facing
 	_attack_shape.disabled = false
 	_slash.visible = true
@@ -205,6 +208,7 @@ func take_damage(amount: int, from_x: float) -> void:
 		return
 
 	GameManager.damage_player(amount)
+	AudioManager.play("hurt")
 	_invincibility_timer = invincibility_time
 	velocity.x = signf(global_position.x - from_x) * knockback_force
 	velocity.y = -150.0

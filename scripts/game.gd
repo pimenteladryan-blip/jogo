@@ -152,6 +152,7 @@ func _on_retry_pressed() -> void:
 
 
 func _on_victory() -> void:
+	AudioManager.play("victory")
 	await get_tree().create_timer(1.6).timeout
 	victory.show()
 	get_tree().paused = true

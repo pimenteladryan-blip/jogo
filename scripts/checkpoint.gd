@@ -17,6 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_used = true
 	GameManager.set_checkpoint(room_id, respawn)
 	GameManager.heal_full()
+	AudioManager.play("bell")
 	Fx.light_burst(get_parent(), global_position + Vector2(0, -22), Color(0.878431, 0.643137, 0.345098), 22)
 	var tween := create_tween()
 	tween.tween_property($Visual, "modulate", Color(1.5, 1.5, 1.5, 1.0), 0.12)

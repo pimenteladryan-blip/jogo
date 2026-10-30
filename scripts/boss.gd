@@ -97,5 +97,6 @@ func _summon() -> void:
 
 func _die() -> void:
 	GameManager.boss_defeated = true
+	AudioManager.play("boss")
 	GameManager.victory.emit()
 	super._die()

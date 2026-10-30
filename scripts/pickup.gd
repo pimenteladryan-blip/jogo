@@ -27,6 +27,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	_taken = true
 	GameManager.unlock_ability(ability)
+	AudioManager.play("pickup")
 	Fx.light_burst(get_parent(), global_position, Color(0.878431, 0.643137, 0.345098), 28)
 	var tween := create_tween()
 	tween.tween_property(visual, "scale", Vector2(1.8, 1.8), 0.25)
